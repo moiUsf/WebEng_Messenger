@@ -1,5 +1,7 @@
 <?php
 
+include ('/Users/youssefElOuatiq/phpLibrary/httpful.phar');
+
 
 
 echo " <p> hello Word  </p>";
@@ -116,6 +118,18 @@ echo "<p></p>";
 echo "Key size: " . $key_size2 . "\n";
 
 echo "<p></p>";
+
+//GET & PARSE JSON
+$uri = "http://localhost/restexample/user/1/";
+$response = \Httpful\Request::get($uri)->send();
+
+echo 'The Dead Weather has ' . count($response->body->result->album) . " albums.\n";
+
+
+
+
+
+
 
 
 ?>
