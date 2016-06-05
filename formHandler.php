@@ -1,13 +1,14 @@
 <?php
 
 include ('/Users/youssefElOuatiq/phpLibrary/httpful.phar');
+require 'vendor/autoload.php';
 
 
 
 echo " <p> hello Word  </p>";
 
-$name = $_GET['username'];
-$password = $_GET['password'];
+$name = $_POST['username'];
+$password = $_POST['password'];
 
 echo '     '.$name;
 echo '     '.$password;
@@ -89,7 +90,7 @@ echo "<p></p>";
 
 # --- ENCRYPTION ---
 
-$privkey_user_enc = mcrypt_ecb (MCRYPT_RIJNDAEL_128, $masterKey, $privkey_user, MCRYPT_MODE_CBC );
+$privkey_user_enc = mcrypt_ecb (MCRYPT_RIJNDAEL_128, $masterKey, $privkey_user, MCRYPT_MODE_CBC);
 
 
 
@@ -119,11 +120,15 @@ echo "Key size: " . $key_size2 . "\n";
 
 echo "<p></p>";
 
-//GET & PARSE JSON
-$uri = "http://localhost/restexample/user/1/";
-$response = \Httpful\Request::get($uri)->send();
+$client = new GuzzleHttp\Client();
+$res = $client->request('GET', 'http://localhost/restexample/user/list/');
 
-echo 'The Dead Weather has ' . count($response->body->result->album) . " albums.\n";
+echo $res->getStatusCode();
+// 200
+echo $res->getHeaderLine('content-type');
+// 'application/json; charset=utf8'
+echo $res->getBody();
+// {"type":"User"...'
 
 
 
